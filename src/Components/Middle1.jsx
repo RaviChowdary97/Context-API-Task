@@ -1,31 +1,26 @@
 import { useContext } from "react";
-import cartContext from "./CartContext";
-import priceContext from "./priceContext";
-import discountContext from "./discountContext";
+import { useNavigate } from "react-router-dom";
+import cartContext from "../Components/CartContext";
 
 export const Middle1 = () => {
-  const cartValUCtxt = useContext(cartContext);
-  const priceValUCtxt = useContext(priceContext);
-  const discount = useContext(discountContext);
-
+  const [cartValUCtxt] = useContext(cartContext);
+  const navigate = useNavigate();
   return (
-    <>
-      <div
-        className="card bg-dark text-white"
-        style={{ width: "100%", height: "250px", borderRadius: "0" }}
-      >
-        <div
-          className="card-body d-flex  flex-column  justify-content-center align-items-center"
-          style={{ border: "1px solid red" }}
+    <div
+      className="navbar bg-dark text-white d-flex justify-content-between"
+      style={{ width: "100%", height: "60px", padding: "10px" }}
+    >
+      <h1>Mobile Shop</h1>
+      <div className="d-flex align-items-center">
+        <h6>Total Items: {cartValUCtxt.length}</h6>
+        <button
+          className="btn btn-primary ml-3"
+          onClick={() => navigate("/cart")}
+          style={{ marginLeft: "20px" }}
         >
-          <h1 className="card-title"> Cart-{cartValUCtxt}</h1>
-          <h6 className="card-text">Total Price - ${priceValUCtxt}</h6>
-          <h6 className="card-text">After Discount - ${discount}</h6>
-          <h6 className="card-text">
-            SHIPPING -{priceValUCtxt > 200 ? "$20 Has to pay" : "FREE"}
-          </h6>
-        </div>
+          Go to Cart
+        </button>
       </div>
-    </>
+    </div>
   );
 };

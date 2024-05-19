@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ItemUi from "./Components/ItemUi";
 import { Middle1 } from "./Components/Middle1";
+import Cart from "./Components/Cart";
 import cartContext from "./Components/CartContext";
 import priceContext from "./Components/priceContext";
 import discountContext from "./Components/discountContext";
@@ -75,27 +77,36 @@ const App = () => {
     },
   ];
 
-  const [cartUCtxt, setcartUCtxt] = useState(0);
+  const [cartUCtxt, setcartUCtxt] = useState([]);
   const [priceUCtxt, setpriceUCtxt] = useState(0);
   const [pc, setPc] = useState(0);
+
   return (
-    <>
+    <Router>
       <discountContext.Provider value={[pc, setPc]}>
         <priceContext.Provider value={[priceUCtxt, setpriceUCtxt]}>
           <cartContext.Provider value={[cartUCtxt, setcartUCtxt]}>
-            <div
-              className="d-flex flex-wrap  text-white "
-              style={{ gap: "3%", marginBottom: "20px" }}
-            >
-              <Middle1 />
-              {products.map((element) => (
-                <ItemUi key={element.id} {...element} />
-              ))}
-            </div>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <div
+                    className="d-flex flex-wrap text-white"
+                    style={{ gap: "3%", marginBottom: "20px" }}
+                  >
+                    <Middle1 />
+                    {products.map((element) => (
+                      <ItemUi key={element.id} {...element} />
+                    ))}
+                  </div>
+                }
+              />
+              <Route path="/cart" element={<Cart />} />
+            </Routes>
           </cartContext.Provider>
         </priceContext.Provider>
       </discountContext.Provider>
-    </>
+    </Router>
   );
 };
 
